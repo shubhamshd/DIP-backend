@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const cors = require("cors");
+app.use(cors());
 
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
@@ -16,7 +17,6 @@ mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true })
 app.use(express.urlencoded({ extended: false }));
 app.use("/", require("./routes/ideaRoute"));
 app.use(express.json);
-app.use(cors());
 
 const PORT = process.env.PORT || 4111;
 app.listen(PORT, console.log("Server started at port: " + PORT))
