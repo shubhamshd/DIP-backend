@@ -1,9 +1,11 @@
 const express = require("express");
-const { getAllIdea } = require("../controllers/ideaController");
+const { getAllIdea, createIdea } = require("../controllers/ideaController");
+
 
 const router = express.Router();
 
 //Dashboard
-router.get("/dashboard", getAllIdea);
+router.get("/getAllIdea", getAllIdea);
+router.post("/createIdea",createIdea);
 
 module.exports = router;

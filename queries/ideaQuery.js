@@ -12,6 +12,34 @@ const getAllIdeaQuery = async() => {
     }
 }
 
+const createIdeaQuery = async(body) => {
+    try {
+        console.log(body)
+        let doc = { 
+            name: body.name,
+            image: body.image,
+            author: body.author,
+            description: body.description
+        }  
+        console.log("before resp")
+        const resp = await IdeaModel.create(doc ,function (err, small) {
+            if (err) {console.log(err);}
+            else{
+                console.log(small);
+            }
+
+          });
+        console.log("after resp")
+        return Promise.resolve({ status: true, data:resp, message: `All Idea response` });
+    }
+        catch (error) {
+        return Promise.reject([500, 'Internal Server Error'])
+    }
+}
+
+
+
 module.exports={
-    getAllIdeaQuery
+    getAllIdeaQuery,
+    createIdeaQuery
 }
