@@ -14,7 +14,7 @@ const { getAllIdeaQuery, createIdeaQuery } = require("../queries/ideaQuery");
 const getAllIdea = async(req, res) => {
     try {
         // let { group_name, group_type, group_member_id } = req.body
-        const response = await getAllIdeaQuery()
+        await getAllIdeaQuery()
         .then((resp) => {
             res.status(200).json(resp.data);
         });
