@@ -19,8 +19,7 @@ const IdeaSchema = new mongoose.Schema({
   date: {
     type: Date,
     default: Date.now,
-  },
- 
+  }
 });
 
 const IdeaModel = mongoose.model("Idea", IdeaSchema);
