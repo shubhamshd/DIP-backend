@@ -1,13 +1,20 @@
 const { uploadToIpfs } = require("../helpers/ipfs");
 const IdeaModel = require("../models/ideaModel");
-const { createIdea } = require("../helpers/web3")
+const { createIdeaOnBlockchain, getNumOfIdeas } = require("../helpers/web3")
 
 const getAllIdeaQuery = async() => {
     try {
         // const response = await IdeaModel.find().project({ name: 1 });
         // await IdeaModel.find().project({ name: 1 });
-        const resp = await IdeaModel.find({});
-        return Promise.resolve({ status: true, data:resp, message: `All Idea response` });
+        // const resp = await IdeaModel.find({});
+        // return Promise.resolve({ status: true, data:resp, message: `All Idea response` });
+
+        //get data from Blockchain
+        console.log("about to query num of ideas from getAllIdeaQuery function")
+        const numOfIdeas = await getNumOfIdeas();
+        console.log(numOfIdeas);
+        return numOfIdeas;
+        // await getIdeaFromBlockchain()
     } catch (error) {
         // Logger.log(error)
         return Promise.reject([500, 'Internal Server Error'])
@@ -25,7 +32,7 @@ const createIdeaQuery = async(body) => {
             description: body.description
         }  
         console.log("before resp")
-        const resp = await createIdea(doc ,function (err, small) {
+        const resp = await createIdeaOnBlockchain(doc ,function (err, small) {
             if (err) {console.log(err);}
             else{
                 console.log(small);

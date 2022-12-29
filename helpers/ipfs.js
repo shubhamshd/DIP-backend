@@ -1,20 +1,28 @@
 const ipfsAPI = require('ipfs-api');
 const fs = require('fs');
 
-
 //Connceting to the ipfs network via infura gateway
-const ipfs = ipfsAPI('ipfs.infura.io', '5001', {protocol: 'https'})
+const ipfs = new ipfsAPI({ host: 'ipfs.infura.io', port: 5001, protocol: 'https' })
 
 //Addfile router for adding file a local file to the IPFS network without any local node
 
-const uploadToIpfs = async(imageData) => {
+const uploadToIpfs = async() => {
     
     //Reading file from computer
-    let testFile = fs.readFileSync(imageData);
-    //Creating buffer for ipfs function to add file to the system
-    // let testBuffer = new Buffer(testFile);
+    let testFile = fs.readFileSync("./helpers/1.png");
+    
+    let testBuffer = await Buffer.from(testFile);
 
-    const result = ipfs.add(testFile);
+    console.log(testBuffer);
+   
+    const result = await ipfs.files.add(testBuffer, (error, result) => {
+        if (error) {
+          console.error("error inside ipfs.add function", error);
+        } else {
+          // The image data has been successfully added to IPFS
+          console.log(result[0].hash); // Print the IPFS hash of the image
+        }
+      });
     return result;
 }
 
