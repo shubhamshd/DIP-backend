@@ -18,5 +18,8 @@
     "ipfs-api": "^26.1.2",
     "mongoose": "^6.8.1",
     "web3": "^1.8.1"
+  },
+  "devDependencies": {
+    "bcrypt": "^5.1.0"
   }
 }

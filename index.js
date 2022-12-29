@@ -17,7 +17,8 @@ mongoose.connect(database, {useUnifiedTopology: true, useNewUrlParser: true })
 .catch(err => console.log(err));
 
 app.use(express.urlencoded({ extended: false }));
-app.use("/", require("./routes/ideaRoute"));
+app.use("/dashboard", require("./routes/ideaRoute"));
+app.use("/user", require("./routes/userRoute"));
 
 
 const PORT = process.env.PORT || 4111;
