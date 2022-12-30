@@ -11,7 +11,7 @@ function makeStorageClient() {
     });
 }
   
-const storeFiles = async (req, res) => {
+const storeFiles = async () => {
 
     const file = await Web3Storage.getFilesFromPath('./helpers/1.png');
     console.log(file);
@@ -19,10 +19,9 @@ const storeFiles = async (req, res) => {
     // const file = req.files.file.data;
     // console.log(file);
     const client = makeStorageClient();
+    console.log(client)
     const cid = await client.put(file)
-    .then((resp) => {
-        res.status(200).json(resp);
-    });
+    return cid;
     // console.log(cid);
     // // return cid;
     // res.status(200).json(resp.data);
