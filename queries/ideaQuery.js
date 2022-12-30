@@ -31,7 +31,9 @@ const createIdeaQuery = async(body) => {
     try {
         console.log(body)
         const cid = await storeFiles();
+        console.log(cid)
         const imageUrl = "https://ipfs.io/ipfs/" + cid + "/" + "1.png";
+        console.log(imageUrl)
         let doc = { 
             name: body.name,
             description: body.description,
