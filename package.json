@@ -20,7 +20,8 @@
     "ipfs-core": "^0.17.0",
     "ipfs-http-client": "^59.0.0",
     "mongoose": "^6.8.1",
-    "web3": "^1.8.1"
+    "web3": "^1.8.1",
+    "web3.storage": "^4.4.0"
   },
   "devDependencies": {
     "bcrypt": "^5.1.0"

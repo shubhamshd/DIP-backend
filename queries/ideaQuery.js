@@ -1,6 +1,7 @@
 const { uploadToIpfs } = require("../helpers/ipfs");
 const IdeaModel = require("../models/ideaModel");
 const { createIdeaOnBlockchain, getNumOfIdeas } = require("../helpers/web3")
+const storeFiles = require("../helpers/web3Storage-test")
 
 const getAllIdeaQuery = async() => {
     try {
@@ -13,7 +14,12 @@ const getAllIdeaQuery = async() => {
         console.log("about to query num of ideas from getAllIdeaQuery function")
         const numOfIdeas = await getNumOfIdeas();
         console.log(numOfIdeas);
-        return numOfIdeas;
+        const ideaList = [];
+        for (i=0; i<numOfIdeas; i++){
+            let idea = await getIdeaFromBlockchain(i);
+            ideaList.push(idea);
+        }
+        return Promise.resolve({ status: true, data:ideaList, message: `All Idea response` });
         // await getIdeaFromBlockchain()
     } catch (error) {
         // Logger.log(error)
@@ -24,12 +30,13 @@ const getAllIdeaQuery = async() => {
 const createIdeaQuery = async(body) => {
     try {
         console.log(body)
-        const ipfsresult = await uploadToIpfs(body.image);
+        const cid = await storeFiles();
+        const imageUrl = "https://ipfs.io/ipfs/" + cid + "/" + "1.png";
         let doc = { 
             name: body.name,
-            imageCid: ipfsresult.path,
-            author: body.author,
-            description: body.description
+            description: body.description,
+            imageUrl: imageUrl,
+            author: body.author, 
         }  
         console.log("before resp")
         const resp = await createIdeaOnBlockchain(doc ,function (err, small) {
