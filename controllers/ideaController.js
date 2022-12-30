@@ -30,6 +30,7 @@ const createIdea = async(req, res) => {
         console.log(req.body)
         const response = await createIdeaQuery(req.body)
         .then((resp) => {
+            res.set("Access-Control-Allow-Origin", "http://localhost:3000");
             res.status(200).json(resp.data);
         });
         

@@ -6,7 +6,7 @@ const fileUpload = require('express-fileupload');
 app.use(fileUpload());
 
 app.use(express.json());
-app.use(cors())
+app.use(cors());
 
 const mongoose = require('mongoose');
 const dotenv = require("dotenv");
