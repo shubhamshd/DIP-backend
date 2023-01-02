@@ -19,7 +19,7 @@ const storeFiles = async () => {
     // const file = req.files.file.data;
     // console.log(file);
     const client = makeStorageClient();
-    console.log(client)
+    // console.log(client)
     const cid = await client.put(file)
     return cid;
     // console.log(cid);

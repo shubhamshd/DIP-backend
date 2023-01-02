@@ -29,6 +29,7 @@ const createIdea = async(req, res) => {
     try {
         // let { name, image, author,description } = req.body
         console.log(req.body.body)
+        // console.log(req)
         const response = await createIdeaQuery(req.body.body)
         .then((resp) => {
             res.set("Access-Control-Allow-Origin", "*");

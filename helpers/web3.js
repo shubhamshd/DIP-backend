@@ -17,29 +17,36 @@ const web3 = new Web3("https://goerli.infura.io/v3/" + infura_api_key);
 const Ideacontract = new web3.eth.Contract(contractJson.abi, "0xD2344f3054D363Aa2715ba83B29F58aCcfeb9186");
 
 // Call the contract function
-const createIdeaOnBlockchain = async(_name, _description, _imageCId, _author) => {
-  await Ideacontract.methods.createIdea(_name, _description, _imageCId, _author).call((error, result) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(result);
-    }
-  });
+const createIdeaOnBlockchain = async(doc) => {
+  console.log("before calling createIdea")
+  const resp = await Ideacontract.methods.createIdea(doc.name, doc.description, doc.imageCId, doc.author).call();
+  console.log(resp);
+  return resp;
+  // await Ideacontract.methods.createIdea(doc.name, doc.description, doc.imageCId, doc.author).call((error, result) => {
+  //   if (error) {
+  //     console.error(error);
+  //   } else {
+  //     console.log(result);
+  //     return result;
+  //   }
+  // });
 }
 
 const getIdeaFromBlockchain = async(_key) => {
-  await Ideacontract.methods.ideas(_key).call((error, result) => {
-    if (error) {
-      console.error(error);
-    } else {
-      console.log(result);
-    }
-  });
+  const idea = await Ideacontract.methods.ideas(_key).call();
+  return idea;
+  // await Ideacontract.methods.ideas(_key).call((error, result) => {
+  //   if (error) {
+  //     console.error(error);
+  //   } else {
+  //     console.log(result);
+  //     return result;
+  //   }
+  // });
 }
 
 const getNumOfIdeas = async() => {
   const numOfIdeas = await Ideacontract.methods.numOfIdeas().call();
-  console.log("inside getNumOfIdeas function", numOfIdeas)
   return numOfIdeas;
 }
 module.exports = {
