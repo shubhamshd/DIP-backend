@@ -11,14 +11,12 @@ const getAllIdeaQuery = async() => {
         // return Promise.resolve({ status: true, data:resp, message: `All Idea response` });
 
         //get data from Blockchain
-        console.log("about to query num of ideas from getAllIdeaQuery function")
         const numOfIdeas = await getNumOfIdeas();
         const ideaList = [];
         for (let i=0; i<numOfIdeas; i++){
             let idea = await getIdeaFromBlockchain(i);
             ideaList.push(idea);
         }
-        console.log("ideaList :", ideaList);
         return Promise.resolve({ status: true, data:ideaList, message: `All Idea response` });
         // await getIdeaFromBlockchain()
     } catch (error) {
