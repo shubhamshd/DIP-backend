@@ -9,7 +9,5 @@ const router = express.Router();
 //Dashboard
 router.get("/getAllIdea", getAllIdea);
 router.post("/createIdea",createIdea);
-// router.post("/uploadToIpfs", uploadToIpfs);
-// router.post("/storeFiles", storeFiles);
 
 module.exports = router;
