@@ -18,6 +18,7 @@ const getAllIdea = async(req, res) => {
         .then((resp) => {
             res.setHeader('Access-Control-Allow-Credentials', true)
             res.setHeader('Access-Control-Allow-Origin', '*')
+            console.log(resp.data);
             res.status(200).json(resp.data);
         });
         
