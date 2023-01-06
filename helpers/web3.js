@@ -16,7 +16,11 @@ var web3 = new Web3(provider);
 // const abi = JSON.parse(fs.readFileSync("contractAbi.json", "utf8"));
 
 // Get the contract instance
-const Ideacontract = new web3.eth.Contract(contractJson.abi, "0xD2344f3054D363Aa2715ba83B29F58aCcfeb9186");
+// const Ideacontract = new web3.eth.Contract(contractJson.abi, "0xD2344f3054D363Aa2715ba83B29F58aCcfeb9186");
+
+// Get the IdeaNFT contract instance
+const Ideacontract = new web3.eth.Contract(contractJson.abi, "0x8f76099ddfBE52FaF0210a5d21c5313B440c4aFd");
+
 
 // Call the contract function
 const createIdeaOnBlockchain = async(doc) => {
@@ -35,8 +39,12 @@ const createIdeaOnBlockchain = async(doc) => {
 }
 
 const getIdeaFromBlockchain = async(_key) => {
-  const idea = await Ideacontract.methods.ideas(_key).call();
-  return idea;
+  const idea = await Ideacontract.methods.tokenURI(_key).call();
+  let encodedString = idea.split(",")[1];
+  // console.log(encodedString);
+  let decodedString = Buffer.from(encodedString, "base64").toString("utf8");
+  console.log(decodedString);
+  return decodedString;
   // await Ideacontract.methods.ideas(_key).call((error, result) => {
   //   if (error) {
   //     console.error(error);
@@ -48,7 +56,8 @@ const getIdeaFromBlockchain = async(_key) => {
 }
 
 const getNumOfIdeas = async() => {
-  const numOfIdeas = await Ideacontract.methods.numOfIdeas().call();
+  const numOfIdeas = await Ideacontract.methods.tokenId().call();
+  console.log(numOfIdeas);
   return numOfIdeas;
 }
 module.exports = {
