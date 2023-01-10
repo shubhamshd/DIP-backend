@@ -46,7 +46,7 @@ saveUninitialized: true
 app.use(express.urlencoded({ extended: false }));
 app.use("/dashboard", require("./routes/ideaRoute"));
 app.use("/user", require("./routes/userRoute"));
-// app.use("/comment",require("./routes/commentRoute"));
+app.use("/comment",require("./routes/commentRoute"));
 
 const PORT = process.env.PORT || 4111;
 app.listen(PORT, console.log("Server started at http://localhost:" + PORT))
