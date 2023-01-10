@@ -2,21 +2,29 @@
 const UserModel = require('../models/userModel');
 const {encryptPassword, decryptPassword } = require('../functions/encryption')
 
-const loginUserQuery = async(body) => {
+const loginUserQuery = async(req,body) => {
 
     try{
-        const findUser = await UserModel.findOne({email_id:body.email_id});
-        if(findUser){
-            let checkPassword = decryptPassword(body.password,findUser.password);
+        const user = await UserModel.findOne({email_id:body.email_id});
+        if(user){
+            let checkPassword = decryptPassword(body.password,user.password);
             if(checkPassword){
-                return Promise.resolve({status:true,msg:"login successfully"});
+                req.session.user = user
+                req.session.save(err => {
+                    if(err){
+                        console.log(err);
+                    } else {
+                        console.log("session is saved")
+                    }
+                });
+                return Promise.resolve({status:true,msg:"login successfully",session:req.session});
             }
             else{
                 return Promise.resolve({status:false,msg:"password is incorrect"});
             }
         }
         else{
-            return Promise.resolve({status:false,msg:"please first login then try to login"});
+            return Promise.resolve({status:false,msg:"please first rigister then try to login"});
         }
     }
     catch(err){
@@ -24,7 +32,7 @@ const loginUserQuery = async(body) => {
     }
 }
 
-const registerUserQuery = async(body)=>{
+const registerUserQuery = async(req,body)=>{
 
     try{
         let encryptpassword = encryptPassword(body.password);
@@ -34,11 +42,20 @@ const registerUserQuery = async(body)=>{
             email_id: body.email_id,
             password: encryptpassword,
         }
-        const response = await UserModel.create(doc);
-        return Promise.resolve({ status: true, data:response})
+        const user = await UserModel.create(doc);
+        console.log(user)
+        req.session.user = user;
+        req.session.save(err => {
+            if(err){
+                console.log(err);
+            } else {
+                console.log("session is saved")
+            }
+        });
+        return Promise.resolve({ status: true,session:req.session})
     }
     catch(err){
-        return Promise.reject([500, 'Internal Server Error'])
+        return Promise.reject({status:false,msg:"please try different emailId"})
     }
 }
 
