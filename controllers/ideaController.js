@@ -16,8 +16,8 @@ const getAllIdea = async(req, res) => {
         // let { group_name, group_type, group_member_id } = req.body
         const response = await getAllIdeaQuery()
         .then((resp) => {
-            res.setHeader('Access-Control-Allow-Credentials', true)
-            res.setHeader('Access-Control-Allow-Origin', '*')
+            // res.setHeader('Access-Control-Allow-Credentials', true)
+            // res.setHeader('Access-Control-Allow-Origin', '*')
             console.log(resp.data);
             res.status(200).json(resp.data);
         });
