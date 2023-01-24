@@ -1,11 +1,11 @@
 const Web3 = require("web3");
 const Provider = require('@truffle/hdwallet-provider');
-const contractJson = require("./contractAbi.json")
+const abi = require("./abi")
 const dotenv = require("dotenv");
 
 
 dotenv.config();
-var address = "0xA82E1882c6F8b766314754Fc9ee6a304202D53Db";
+var address = "0xA404C8849C20997EE4ba3A4709976d7Aa3286398";
 var privatekey = process.env.PRIVATE_KEY;
 const infura_api_key = process.env.INFURA_API_KEY;
 
@@ -19,7 +19,7 @@ var web3 = new Web3(provider);
 // const Ideacontract = new web3.eth.Contract(contractJson.abi, "0xD2344f3054D363Aa2715ba83B29F58aCcfeb9186");
 
 // Get the IdeaNFT contract instance
-const Ideacontract = new web3.eth.Contract(contractJson.abi, "0x8f76099ddfBE52FaF0210a5d21c5313B440c4aFd");
+const Ideacontract = new web3.eth.Contract(abi, "0x8f76099ddfBE52FaF0210a5d21c5313B440c4aFd");
 
 
 // Call the contract function
