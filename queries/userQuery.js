@@ -5,11 +5,13 @@ const {encryptPassword, decryptPassword } = require('../functions/encryption')
 const loginUserQuery = async(req,body) => {
 
     try{
+        console.log(body)
         const user = await UserModel.findOne({email_id:body.email_id});
         if(user){
             let checkPassword = decryptPassword(body.password,user.password);
             if(checkPassword){
                 req.session.user = user
+                
                 req.session.save(err => {
                     if(err){
                         console.log(err);
@@ -33,8 +35,8 @@ const loginUserQuery = async(req,body) => {
 }
 
 const registerUserQuery = async(req,body)=>{
-
     try{
+        console.log(body)
         let encryptpassword = encryptPassword(body.password);
         let doc = {
             first_name: body.first_name,
@@ -52,7 +54,7 @@ const registerUserQuery = async(req,body)=>{
                 console.log("session is saved")
             }
         });
-        return Promise.resolve({ status: true,session:req.session})
+        return Promise.resolve({ status: true,msg:"registration complited",session:req.session})
     }
     catch(err){
         return Promise.reject({status:false,msg:"please try different emailId"})
