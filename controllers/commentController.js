@@ -1,8 +1,8 @@
 
-const {getCommentQuery, postCommentQuery } = require('../queries/commentQuery')
+const {getCommentQuery, postCommentQuery, getCommentsOfSingleIdeaQuery} = require('../queries/commentQuery')
 
 
-const getCommentController = async(req,res) => {
+const getAllCommentController = async(req,res) => {
     try{
         const response = await getCommentQuery();
         return res.status(200).json(response.data);
@@ -12,9 +12,10 @@ const getCommentController = async(req,res) => {
     }
 }
 
-const postCommentController = async(req,res)=>{
+const getCommentOnIdeaController = async(req,res) => {
     try{
-        const response = await postCommentQuery(req.body);
+        console.log(req.query)
+        const response = await getCommentsOfSingleIdeaQuery(req.query);
         return res.status(200).json(response.data);
     }
     catch(error){
@@ -22,7 +23,18 @@ const postCommentController = async(req,res)=>{
     }
 }
 
+const postCommentController = async(req,res)=>{
+    try{
+        const response = await postCommentQuery(req.body.body);
+        return res.status(200).json({status:response.status,msg:response.data});
+    }
+    catch(error){
+        console.log(error);
+    }
+}
+
 module.exports = {
-    getCommentController,
+    getAllCommentController,
+    getCommentOnIdeaController,
     postCommentController
 }

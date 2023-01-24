@@ -5,12 +5,19 @@ const CommentSchema = new mongoose.Schema({
     type: Number,
     required: true
   },
-  user_email:{
-    type: String,
+  likes:{
+    type: Number
   },
-  comment:{
-      type: String
+  comments:[{
+    username: {
+      type: String,
+      required: true
     },
+    comment:{
+      type: String,
+      required: true
+    }
+ }],
   date: {
     type: Date,
     default: Date.now

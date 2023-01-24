@@ -4,7 +4,7 @@ const {loginUserQuery, registerUserQuery } = require('../queries/userQuery')
 
 const loginUser = async(req,res) => {
     try {
-        await loginUserQuery(req,req.body)
+        await loginUserQuery(req,req.body.body)
         .then((resp) => {
             res.status(200).json(resp);
         });
@@ -16,7 +16,7 @@ const loginUser = async(req,res) => {
 
 const registerUser = async(req,res)=>{
     try {
-        await registerUserQuery(req,req.body)
+        await registerUserQuery(req,req.body.body)
         .then((resp) => {
             res.status(200).json(resp);
         });
